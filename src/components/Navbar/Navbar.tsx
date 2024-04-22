@@ -14,6 +14,13 @@ const Navbar = () => {
           <Text color={appTheme.colors.success}>Query</Text>
         </LinkButton>
 
+        <LinkButton
+          variant="borderless"
+          onClick={() => router.push("/publish")}
+        >
+          <Text color={appTheme.colors.success}>Publish</Text>
+        </LinkButton>
+
         <LinkButton variant="borderless" onClick={() => router.push("/relays")}>
           <Text color={appTheme.colors.success}>Relays</Text>
         </LinkButton>

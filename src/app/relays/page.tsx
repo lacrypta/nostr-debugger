@@ -7,35 +7,56 @@ import {
   Divider,
   Flex,
   Heading,
+  Input,
   LinkButton,
   Text,
 } from "@lawallet/ui";
-import React, { useEffect, useState } from "react";
+import React, {
+  ReactEventHandler,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 
 const Page = () => {
+  const [inputRelay, setInputRelay] = useState<string>("");
   const [relaysList, setRelaysList] = useState<string[]>([]);
   const { ndk } = useNostrContext();
 
-  useEffect(() => {
+  const reloadRelays = useCallback(() => {
     const relays = Object.keys(Object.fromEntries(ndk.pool.relays));
     setRelaysList(relays);
   }, [ndk]);
 
-  //   useEffect(() => {
-  //     if (!relaysList.includes("wss://relay.hodl.ar"))
-  //       ndk.addExplicitRelay("wss://relay.hodl.ar");
-  //     // ndk.outboxPool?.removeRelay("wss://relay.lawallet.ar");
-  //   }, []);
+  const handleAddRelay = (relay: string) => {
+    ndk.addExplicitRelay(relay);
+    reloadRelays();
+  };
+
+  const handleChangeInput = (e: any) => {
+    const text: string = e.target.value;
+    setInputRelay(text);
+  };
+
+  const removeRelay = (relay: string) => {
+    try {
+      ndk.pool.removeRelay(relay);
+      ndk.outboxPool?.removeRelay(relay);
+      reloadRelays();
+    } catch {
+      console.log("error al remover el relay");
+    }
+  };
+
+  useEffect(() => {
+    reloadRelays();
+  }, [ndk]);
 
   return (
     <Container>
       <Divider y={16} />
 
       <Navbar />
-
-      <Divider y={16} />
-
-      <Heading>--- BETA (not work) ----</Heading>
 
       <Divider y={16} />
 
@@ -47,13 +68,26 @@ const Page = () => {
 
               <LinkButton
                 variant="borderless"
-                onClick={() => ndk.pool.removeRelay(relay)}
+                onClick={() => removeRelay(relay)}
               >
                 Eliminar
               </LinkButton>
             </Flex>
           );
         })}
+
+        <Divider y={16} />
+
+        <Flex direction="column" justify="center" align="center">
+          <Input
+            onChange={handleChangeInput}
+            placeholder="wss://relay.example.com"
+          />
+
+          <Divider y={16} />
+
+          <Button onClick={() => handleAddRelay(inputRelay)}>Agregar</Button>
+        </Flex>
       </Container>
     </Container>
   );

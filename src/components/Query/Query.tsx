@@ -1,5 +1,10 @@
 import { appTheme } from "@/config/theme";
-import { formatAddress, useFormatter, useSubscription } from "@lawallet/react";
+import {
+  formatAddress,
+  nowInSeconds,
+  useFormatter,
+  useSubscription,
+} from "@lawallet/react";
 import { Button, Divider, Flex, Heading, Sheet, Text } from "@lawallet/ui";
 import { NDKEvent, NDKFilter, NDKKind, NostrEvent } from "@nostr-dev-kit/ndk";
 import dynamic from "next/dynamic";
@@ -35,7 +40,7 @@ const QueryComponent = () => {
     authors: [
       "bd9b0b60d5cd2a9df282fc504e88334995e6fac8b148fa89e0f8c09e2a570a84",
     ],
-    since: undefined,
+    since: nowInSeconds(),
     until: undefined,
     "#p": undefined,
     "#e": undefined,
