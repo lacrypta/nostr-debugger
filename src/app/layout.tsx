@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import "@lawallet/ui/styles";
 import AppProvider from "@/context/AppProvider";
+import "@lawallet/ui/styles";
 
 export const metadata: Metadata = {
   title: "Nostr Debugger",

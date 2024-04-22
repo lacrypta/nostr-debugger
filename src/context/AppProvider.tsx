@@ -5,9 +5,9 @@ import React from "react";
 
 const AppProvider = ({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) => {
+}) => {
   return (
     <NextProvider>
       <NostrProvider>{children}</NostrProvider>

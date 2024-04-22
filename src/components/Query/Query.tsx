@@ -1,16 +1,9 @@
 import { useSubscription } from "@lawallet/react";
-import {
-  Button,
-  Container,
-  Divider,
-  Flex,
-  Heading,
-  Sheet,
-  Text,
-} from "@lawallet/ui";
+import { Button, Divider, Flex, Heading, Sheet, Text } from "@lawallet/ui";
 import { NDKEvent, NDKFilter, NDKKind, NostrEvent } from "@nostr-dev-kit/ndk";
+import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
-import ReactJson, {
+import {
   InteractionProps,
   ReactJsonViewProps,
   ThemeKeys,
@@ -23,6 +16,10 @@ const DefaultJsonViewOptions: Partial<ReactJsonViewProps> = {
   displayDataTypes: false,
   collapseStringsAfterLength: 25,
 };
+
+const DynamicJSONView = dynamic(() => import("react-json-view"), {
+  ssr: false,
+});
 
 const QueryComponent = () => {
   const [selectedEvent, setSelectedEvent] = useState<NostrEvent | null>(null);
@@ -71,7 +68,7 @@ const QueryComponent = () => {
 
   return (
     <>
-      <ReactJson
+      <DynamicJSONView
         src={JSONQuery}
         onEdit={handleEditQuery}
         onAdd={handleEditQuery}
@@ -123,7 +120,7 @@ const QueryComponent = () => {
           </Heading>
 
           <Divider y={16} />
-          <ReactJson src={selectedEvent} {...DefaultJsonViewOptions} />
+          <DynamicJSONView src={selectedEvent} {...DefaultJsonViewOptions} />
         </Sheet>
       )}
     </>
