@@ -3,6 +3,7 @@ import { formatAddress, useFormatter, useSubscription } from "@lawallet/react";
 import { Button, Divider, Flex, Heading, Sheet, Text } from "@lawallet/ui";
 import { NDKEvent, NDKFilter, NDKKind, NostrEvent } from "@nostr-dev-kit/ndk";
 import dynamic from "next/dynamic";
+import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import {
   InteractionProps,
@@ -26,6 +27,9 @@ const QueryComponent = () => {
   const [selectedEvent, setSelectedEvent] = useState<NostrEvent | null>(null);
   const [enabledSubscription, setEnabledSubscription] = useState(false);
   const [nostrEvents, setNostrEvents] = useState<NDKEvent[]>([]);
+
+  const params = useSearchParams();
+
   const [JSONQuery, setJSONQuery] = useState<NDKFilter>({
     kinds: [31111 as NDKKind],
     authors: [
@@ -58,6 +62,15 @@ const QueryComponent = () => {
   const handleEditQuery = (newQuery: InteractionProps) => {
     if (!newQuery || !newQuery.updated_src) return;
     setJSONQuery(newQuery.updated_src as NDKFilter);
+
+    const params = new URLSearchParams(window.location.search);
+    params.set("query", btoa(JSON.stringify(newQuery.updated_src)));
+    window.history.replaceState(
+      {},
+      "",
+      decodeURIComponent(`${window.location.pathname}?${params}`)
+    );
+
     setEnabledSubscription(false);
   };
 
@@ -68,6 +81,19 @@ const QueryComponent = () => {
   useEffect(() => {
     if (enabledSubscription) setNostrEvents([]);
   }, [enabledSubscription]);
+
+  useEffect(() => {
+    const queryParam = params.get("query");
+    if (!queryParam) return;
+
+    try {
+      const decodedQuery = JSON.parse(atob(queryParam));
+
+      setJSONQuery(decodedQuery);
+    } catch {
+      console.log("error al decodificar la query");
+    }
+  }, []);
 
   return (
     <>
