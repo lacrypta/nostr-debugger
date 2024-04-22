@@ -7,10 +7,12 @@ import {
 import { nowInSeconds, useNostrContext } from "@lawallet/react";
 import { Button, Container, Divider, Flex, Input, Text } from "@lawallet/ui";
 import { NDKEvent, NDKPrivateKeySigner, NostrEvent } from "@nostr-dev-kit/ndk";
+import { generatePrivateKey } from "nostr-tools";
 import { useCallback, useEffect, useState } from "react";
 import { InteractionProps } from "react-json-view";
 
 const Page = () => {
+  const [privateKey, setPrivateKey] = useState<string>("");
   const { ndk, initializeSigner, signerInfo } = useNostrContext();
   const [eventToPublish, setEventToPublish] = useState<NostrEvent>({
     kind: 1,
@@ -27,6 +29,13 @@ const Page = () => {
     } as NostrEvent);
   };
 
+  const handleNewPrivKey = async () => {
+    const pvKey = generatePrivateKey();
+    const signer = new NDKPrivateKeySigner(pvKey);
+    setPrivateKey(pvKey);
+    if (signer) initializeSigner(signer);
+  };
+
   const publishEvent = useCallback(async () => {
     if (!signerInfo) return alert("no signer");
     const ndkEvent = new NDKEvent(ndk, eventToPublish);
@@ -35,13 +44,16 @@ const Page = () => {
       await ndkEvent.sign();
       setEventToPublish(await ndkEvent.toNostrEvent());
     } else {
-      ndkEvent.publish();
+      const published = await ndkEvent.publish();
+      if (published) alert("publish enviado");
     }
   }, [signerInfo, ndk, eventToPublish]);
 
   const handleChangePrivateKey = (e: any) => {
     try {
       const pv = e.target.value;
+      setPrivateKey(pv);
+
       const signer = new NDKPrivateKeySigner(pv);
       if (signer) initializeSigner(signer);
     } catch {
@@ -64,16 +76,6 @@ const Page = () => {
 
       <Divider y={16} />
 
-      <Input placeholder="Private key" onChange={handleChangePrivateKey} />
-      {Boolean(signerInfo?.pubkey.length) ? (
-        <>
-          <Divider y={16} />
-          <Text>Pubkey: {signerInfo?.pubkey}</Text>
-        </>
-      ) : null}
-
-      <Divider y={16} />
-
       <DynamicJSONView
         src={eventToPublish}
         onAdd={handleEditJSON}
@@ -82,12 +84,38 @@ const Page = () => {
         {...DefaultJsonViewOptions}
       />
 
+      <Flex flex={1} direction="column" align="center">
+        <Divider y={16} />
+
+        <Flex>
+          <Button onClick={publishEvent}>
+            {eventToPublish.sig ? "Publicar" : "Firmar"}
+          </Button>
+        </Flex>
+      </Flex>
+
       <Divider y={16} />
 
-      <Flex>
-        <Button onClick={publishEvent}>
-          {eventToPublish.sig ? "Publicar" : "Firmar"}
-        </Button>
+      <Flex flex={1} direction="column">
+        <Input
+          placeholder="Private key"
+          onChange={handleChangePrivateKey}
+          value={privateKey}
+        />
+        {Boolean(signerInfo?.pubkey.length) ? (
+          <>
+            <Divider y={16} />
+            <Text>Pubkey: {signerInfo?.pubkey}</Text>
+          </>
+        ) : null}
+
+        <Divider y={16} />
+
+        <Flex>
+          <Button variant="borderless" onClick={handleNewPrivKey}>
+            Generar clave privada
+          </Button>
+        </Flex>
       </Flex>
     </Container>
   );
