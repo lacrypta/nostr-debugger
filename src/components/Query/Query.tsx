@@ -1,12 +1,33 @@
 import { useSubscription } from "@lawallet/react";
-import { Button, Divider, Flex, Heading, Text } from "@lawallet/ui";
-import { NDKFilter, NDKKind, NostrEvent } from "@nostr-dev-kit/ndk";
+import {
+  Button,
+  Container,
+  Divider,
+  Flex,
+  Heading,
+  Sheet,
+  Text,
+} from "@lawallet/ui";
+import { NDKEvent, NDKFilter, NDKKind, NostrEvent } from "@nostr-dev-kit/ndk";
 import { useEffect, useState } from "react";
-import ReactJson, { InteractionProps } from "react-json-view";
+import ReactJson, {
+  InteractionProps,
+  ReactJsonViewProps,
+  ThemeKeys,
+} from "react-json-view";
+
+const DefaultJsonViewOptions: Partial<ReactJsonViewProps> = {
+  name: false,
+  theme: "apathy:inverted" as ThemeKeys,
+  displayObjectSize: false,
+  displayDataTypes: false,
+  collapseStringsAfterLength: 25,
+};
 
 const QueryComponent = () => {
+  const [selectedEvent, setSelectedEvent] = useState<NostrEvent | null>(null);
   const [enabledSubscription, setEnabledSubscription] = useState(false);
-  const [nostrEvents, setNostrEvents] = useState<NostrEvent[]>([]);
+  const [nostrEvents, setNostrEvents] = useState<NDKEvent[]>([]);
   const [JSONQuery, setJSONQuery] = useState<NDKFilter>({
     kinds: [31111 as NDKKind],
     authors: [
@@ -28,10 +49,10 @@ const QueryComponent = () => {
 
   const loadNostrEvents = () => {
     const deduplicated = Object.values(
-      Object.fromEntries(events.map((event) => [event.id, event as NostrEvent]))
+      Object.fromEntries(events.map((event) => [event.id, event as NDKEvent]))
     );
 
-    setNostrEvents(deduplicated.sort((a, b) => b.created_at - a.created_at));
+    setNostrEvents(deduplicated.sort((a, b) => b.created_at! - a.created_at!));
   };
 
   const handleEditQuery = (newQuery: InteractionProps) => {
@@ -52,14 +73,10 @@ const QueryComponent = () => {
     <>
       <ReactJson
         src={JSONQuery}
-        name={false}
-        displayObjectSize={false}
-        displayDataTypes={false}
-        collapseStringsAfterLength={25}
-        theme={"apathy:inverted"}
         onEdit={handleEditQuery}
         onAdd={handleEditQuery}
         onDelete={handleEditQuery}
+        {...DefaultJsonViewOptions}
       />
 
       <Divider y={16} />
@@ -70,16 +87,45 @@ const QueryComponent = () => {
             ? "Desactivar subscripción"
             : "Activar subscripción"}
         </Button>
+
+        <Button variant="borderless" onClick={() => setNostrEvents([])}>
+          Reiniciar eventos
+        </Button>
       </Flex>
 
       <Divider y={16} />
-      <Heading as="h2">Eventos ({nostrEvents.length})</Heading>
+
+      {/* <Container size="small"> */}
+      <Heading as="h4">Eventos ({nostrEvents.length})</Heading>
+
       <Divider y={16} />
+
       {nostrEvents.length
         ? nostrEvents.map((event) => {
-            return <Text key={event.id}>{event.id}</Text>;
+            return (
+              <Flex
+                key={event.id}
+                onClick={async () => {
+                  const nostrEvent: NostrEvent = await event.toNostrEvent();
+                  setSelectedEvent(nostrEvent);
+                }}
+              >
+                <Text>{event.id}</Text>
+              </Flex>
+            );
           })
         : null}
+
+      {selectedEvent && (
+        <Sheet isOpen={true} onClose={() => setSelectedEvent(null)}>
+          <Heading as="h3" align="center">
+            Event {selectedEvent.id}
+          </Heading>
+
+          <Divider y={16} />
+          <ReactJson src={selectedEvent} {...DefaultJsonViewOptions} />
+        </Sheet>
+      )}
     </>
   );
 };

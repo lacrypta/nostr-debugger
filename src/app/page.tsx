@@ -1,7 +1,7 @@
 "use client";
 import QueryComponent from "@/components/Query/Query";
 import { appTheme } from "@/config/theme";
-import { Button, Container, Divider, Flex, Heading, Text } from "@lawallet/ui";
+import { Container, Divider, Flex, Heading, Text } from "@lawallet/ui";
 
 export default function Home() {
   return (
