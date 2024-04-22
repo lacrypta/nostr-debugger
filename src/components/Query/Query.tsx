@@ -16,7 +16,7 @@ import {
   ThemeKeys,
 } from "react-json-view";
 
-const DefaultJsonViewOptions: Partial<ReactJsonViewProps> = {
+export const DefaultJsonViewOptions: Partial<ReactJsonViewProps> = {
   name: false,
   theme: "brewer" as ThemeKeys,
   displayObjectSize: false,
@@ -24,7 +24,7 @@ const DefaultJsonViewOptions: Partial<ReactJsonViewProps> = {
   collapseStringsAfterLength: 25,
 };
 
-const DynamicJSONView = dynamic(() => import("react-json-view"), {
+export const DynamicJSONView = dynamic(() => import("react-json-view"), {
   ssr: false,
 });
 
