@@ -6,6 +6,8 @@
 - [x] Add/remove relay connection
 - [x] Save event filter in URL query
 - [ ] Save relays (localStorage)
+- [ ] Connect/disconnect relay
+- [ ] Show relay connection status
 - [ ] Save pre-config filters
 
 ## Getting started
