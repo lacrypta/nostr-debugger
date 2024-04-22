@@ -85,7 +85,7 @@ const Page = () => {
       <Divider y={16} />
 
       <Heading as="h3" align="center">
-        Evento a publicar:{" "}
+        Event to publish:{" "}
       </Heading>
 
       <Divider y={16} />
@@ -102,8 +102,11 @@ const Page = () => {
         <Divider y={16} />
 
         <Flex>
-          <Button onClick={publishEvent}>
-            {eventToPublish.sig ? "Publicar" : "Firmar"}
+          <Button
+            variant={eventToPublish.sig ? "borderless" : "filled"}
+            onClick={publishEvent}
+          >
+            {eventToPublish.sig ? "Publish" : "Sign"}
           </Button>
         </Flex>
       </Flex>
@@ -127,7 +130,7 @@ const Page = () => {
 
         <Flex>
           <Button variant="borderless" onClick={handleNewPrivKey}>
-            Generar clave privada
+            Generate private key
           </Button>
         </Flex>
       </Flex>

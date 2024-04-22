@@ -11,12 +11,7 @@ import {
   LinkButton,
   Text,
 } from "@lawallet/ui";
-import React, {
-  ReactEventHandler,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
+import { useCallback, useEffect, useState } from "react";
 
 const Page = () => {
   const [inputRelay, setInputRelay] = useState<string>("");
@@ -61,7 +56,7 @@ const Page = () => {
       <Divider y={16} />
 
       <Heading as="h3" align="center">
-        Listado de relays:{" "}
+        List of relays connections:{" "}
       </Heading>
 
       <Divider y={16} />
@@ -76,7 +71,7 @@ const Page = () => {
                 variant="borderless"
                 onClick={() => removeRelay(relay)}
               >
-                Eliminar
+                Delete
               </LinkButton>
             </Flex>
           );
@@ -91,8 +86,9 @@ const Page = () => {
           />
 
           <Divider y={16} />
-
-          <Button onClick={() => handleAddRelay(inputRelay)}>Agregar</Button>
+        </Flex>
+        <Flex>
+          <Button onClick={() => handleAddRelay(inputRelay)}>Add</Button>
         </Flex>
       </Container>
     </Container>

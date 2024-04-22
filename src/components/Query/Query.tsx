@@ -103,7 +103,7 @@ const QueryComponent = () => {
   return (
     <>
       <Flex justify="space-between">
-        <Heading as="h3">Filtros:</Heading>
+        <Heading as="h3">Filters:</Heading>
       </Flex>
 
       <Divider y={16} />
@@ -120,20 +120,18 @@ const QueryComponent = () => {
 
       <Flex>
         <Button onClick={() => setEnabledSubscription(!enabledSubscription)}>
-          {enabledSubscription
-            ? "Desactivar subscripción"
-            : "Activar subscripción"}
+          {enabledSubscription ? "Stop subscription" : "Start subscription"}
         </Button>
 
         <Button variant="borderless" onClick={() => setNostrEvents([])}>
-          Reiniciar eventos
+          Reset events
         </Button>
       </Flex>
 
       <Divider y={16} />
 
       {/* <Container size="small"> */}
-      <Heading as="h4">Eventos ({nostrEvents.length}):</Heading>
+      <Heading as="h4">Events ({nostrEvents.length}):</Heading>
 
       <Divider y={16} />
 
@@ -150,7 +148,7 @@ const QueryComponent = () => {
                 >
                   <Text>{formatAddress(event.id, 30)}</Text>
 
-                  <Text color={appTheme.colors.success}>Ver</Text>
+                  <Text color={appTheme.colors.success}>Display</Text>
                 </Flex>
 
                 <Divider y={16} />
@@ -172,7 +170,7 @@ const QueryComponent = () => {
           <Divider y={16} />
 
           <Flex direction="column">
-            <Heading as="h4">Fecha: </Heading>
+            <Heading as="h4">Date: </Heading>
 
             <Divider y={16} />
 
