@@ -3,6 +3,7 @@ import Navbar from "@/components/Navbar/Navbar";
 import { useNostrContext } from "@lawallet/react";
 import {
   Button,
+  Card,
   Container,
   Divider,
   Flex,
@@ -11,7 +12,7 @@ import {
   LinkButton,
   Text,
 } from "@lawallet/ui";
-import { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 const Page = () => {
   const [inputRelay, setInputRelay] = useState<string>("");
@@ -64,16 +65,22 @@ const Page = () => {
       <Container size="small">
         {relaysList.map((relay) => {
           return (
-            <Flex key={relay} direction="column">
-              <Text>{relay}</Text>
+            <React.Fragment key={relay}>
+              <Card>
+                <Flex direction="column">
+                  <Text>{relay}</Text>
 
-              <LinkButton
-                variant="borderless"
-                onClick={() => removeRelay(relay)}
-              >
-                Delete
-              </LinkButton>
-            </Flex>
+                  <LinkButton
+                    variant="borderless"
+                    onClick={() => removeRelay(relay)}
+                  >
+                    Delete
+                  </LinkButton>
+                </Flex>
+              </Card>
+
+              <Divider y={16} />
+            </React.Fragment>
           );
         })}
 
