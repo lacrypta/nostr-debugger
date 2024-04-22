@@ -1,7 +1,7 @@
 "use client";
 import { NostrProvider } from "@lawallet/react";
 import { NextProvider } from "@lawallet/ui/next";
-import React from "react";
+import React, { Suspense } from "react";
 
 const AppProvider = ({
   children,
@@ -10,7 +10,7 @@ const AppProvider = ({
 }) => {
   return (
     <NextProvider>
-      <NostrProvider>{children}</NostrProvider>
+      <NostrProvider><Suspense>{children}</Suspense></NostrProvider>
     </NextProvider>
   );
 };
