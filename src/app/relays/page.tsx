@@ -60,6 +60,12 @@ const Page = () => {
 
       <Divider y={16} />
 
+      <Heading as="h3" align="center">
+        Listado de relays:{" "}
+      </Heading>
+
+      <Divider y={16} />
+
       <Container size="small">
         {relaysList.map((relay) => {
           return (

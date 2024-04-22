@@ -102,6 +102,12 @@ const QueryComponent = () => {
 
   return (
     <>
+      <Flex justify="space-between">
+        <Heading as="h3">Filtros:</Heading>
+      </Flex>
+
+      <Divider y={16} />
+
       <DynamicJSONView
         src={JSONQuery}
         onEdit={handleEditQuery}
@@ -127,7 +133,7 @@ const QueryComponent = () => {
       <Divider y={16} />
 
       {/* <Container size="small"> */}
-      <Heading as="h4">Eventos ({nostrEvents.length})</Heading>
+      <Heading as="h4">Eventos ({nostrEvents.length}):</Heading>
 
       <Divider y={16} />
 

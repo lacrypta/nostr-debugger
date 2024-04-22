@@ -5,7 +5,15 @@ import {
   DynamicJSONView,
 } from "@/components/Query/Query";
 import { nowInSeconds, useNostrContext } from "@lawallet/react";
-import { Button, Container, Divider, Flex, Input, Text } from "@lawallet/ui";
+import {
+  Button,
+  Container,
+  Divider,
+  Flex,
+  Heading,
+  Input,
+  Text,
+} from "@lawallet/ui";
 import { NDKEvent, NDKPrivateKeySigner, NostrEvent } from "@nostr-dev-kit/ndk";
 import { generatePrivateKey } from "nostr-tools";
 import { useCallback, useEffect, useState } from "react";
@@ -73,6 +81,12 @@ const Page = () => {
       <Divider y={16} />
 
       <Navbar />
+
+      <Divider y={16} />
+
+      <Heading as="h3" align="center">
+        Evento a publicar:{" "}
+      </Heading>
 
       <Divider y={16} />
 
