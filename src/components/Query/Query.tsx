@@ -1,8 +1,9 @@
-import { useSubscription } from "@lawallet/react";
+import { appTheme } from "@/config/theme";
+import { formatAddress, useFormatter, useSubscription } from "@lawallet/react";
 import { Button, Divider, Flex, Heading, Sheet, Text } from "@lawallet/ui";
 import { NDKEvent, NDKFilter, NDKKind, NostrEvent } from "@nostr-dev-kit/ndk";
 import dynamic from "next/dynamic";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   InteractionProps,
   ReactJsonViewProps,
@@ -11,7 +12,7 @@ import {
 
 const DefaultJsonViewOptions: Partial<ReactJsonViewProps> = {
   name: false,
-  theme: "apathy:inverted" as ThemeKeys,
+  theme: "brewer" as ThemeKeys,
   displayObjectSize: false,
   displayDataTypes: false,
   collapseStringsAfterLength: 25,
@@ -37,6 +38,8 @@ const QueryComponent = () => {
     "#a": undefined,
     limit: 100,
   });
+
+  const { formatDate } = useFormatter({});
 
   const { events } = useSubscription({
     filters: [JSONQuery],
@@ -100,15 +103,21 @@ const QueryComponent = () => {
       {nostrEvents.length
         ? nostrEvents.map((event) => {
             return (
-              <Flex
-                key={event.id}
-                onClick={async () => {
-                  const nostrEvent: NostrEvent = await event.toNostrEvent();
-                  setSelectedEvent(nostrEvent);
-                }}
-              >
-                <Text>{event.id}</Text>
-              </Flex>
+              <React.Fragment key={event.id}>
+                <Flex
+                  onClick={async () => {
+                    const nostrEvent: NostrEvent = await event.toNostrEvent();
+                    setSelectedEvent(nostrEvent);
+                  }}
+                  justify="space-between"
+                >
+                  <Text>{formatAddress(event.id, 30)}</Text>
+
+                  <Text color={appTheme.colors.success}>Ver</Text>
+                </Flex>
+
+                <Divider y={16} />
+              </React.Fragment>
             );
           })
         : null}
@@ -120,7 +129,18 @@ const QueryComponent = () => {
           </Heading>
 
           <Divider y={16} />
+
           <DynamicJSONView src={selectedEvent} {...DefaultJsonViewOptions} />
+
+          <Divider y={16} />
+
+          <Flex direction="column">
+            <Heading as="h4">Fecha: </Heading>
+
+            <Divider y={16} />
+
+            <Text isBold>{formatDate(selectedEvent.created_at * 1000)}</Text>
+          </Flex>
         </Sheet>
       )}
     </>

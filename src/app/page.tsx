@@ -1,22 +1,16 @@
 "use client";
+import Navbar from "@/components/Navbar/Navbar";
 import QueryComponent from "@/components/Query/Query";
-import { appTheme } from "@/config/theme";
-import { Container, Divider, Flex, Heading, Text } from "@lawallet/ui";
+import { Container, Divider } from "@lawallet/ui";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
   return (
     <Container>
       <Divider y={16} />
 
-      <Flex flex={0} direction="row" gap={16}>
-        <Heading>Nostr Debug</Heading>
-
-        <Flex flex={1} gap={16} justify="end">
-          <Text color={appTheme.colors.success}>Query</Text>
-
-          <Text color={appTheme.colors.success}>Relays</Text>
-        </Flex>
-      </Flex>
+      <Navbar />
 
       <Divider y={16} />
 
