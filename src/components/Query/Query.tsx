@@ -11,6 +11,7 @@ import {
   Divider,
   Flex,
   Heading,
+  LinkButton,
   Sheet,
   Text,
 } from "@lawallet/ui";
@@ -48,7 +49,7 @@ const QueryComponent = () => {
     authors: [
       "bd9b0b60d5cd2a9df282fc504e88334995e6fac8b148fa89e0f8c09e2a570a84",
     ],
-    since: nowInSeconds(),
+    since: undefined,
     until: undefined,
     "#p": undefined,
     "#e": undefined,
@@ -112,6 +113,17 @@ const QueryComponent = () => {
     <>
       <Flex justify="space-between">
         <Heading as="h3">Filters:</Heading>
+
+        <Flex
+          justify="end"
+          onClick={() => {
+            setJSONQuery((prev) => {
+              return { ...prev, since: nowInSeconds() };
+            });
+          }}
+        >
+          <Text color={appTheme.colors.primary}>Set date now</Text>
+        </Flex>
       </Flex>
 
       <Divider y={16} />

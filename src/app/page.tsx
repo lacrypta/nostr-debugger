@@ -1,6 +1,6 @@
 "use client";
 import QueryComponent from "@/components/Query/Query";
-import { Container, Divider } from "@lawallet/ui";
+import { Container } from "@lawallet/ui";
 
 export default function Home() {
   return (
