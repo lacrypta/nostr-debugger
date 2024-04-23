@@ -13,7 +13,7 @@ const Navbar = () => {
         <Heading>Nostr Debug</Heading>
       </Link> */}
       <LinkButton onClick={() => router.push("/")} variant="borderless">
-        <Heading color={appTheme.colors.success}>Nostr Debug</Heading>
+        <Heading color={appTheme.colors.primary}>Nostr Debug</Heading>
       </LinkButton>
 
       <Flex flex={1} gap={16} justify="end">
