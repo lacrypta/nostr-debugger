@@ -113,16 +113,40 @@ const Page = () => {
 
       <Divider y={16} />
 
-      <Flex flex={1} direction="column">
+      <Heading as="h3" align="center">
+        Keys Info:{" "}
+      </Heading>
+
+      <Divider y={16} />
+
+      <Flex flex={1} direction="column" align="center">
+        <Text align="center" isBold={true}>
+          Private key
+        </Text>
+
+        <Divider y={16} />
+
         <Input
-          placeholder="Private key"
+          placeholder="Paste private key"
           onChange={handleChangePrivateKey}
           value={privateKey}
         />
         {Boolean(signerInfo?.pubkey.length) ? (
           <>
-            <Divider y={16} />
-            <Text>Pubkey: {signerInfo?.pubkey}</Text>
+            <Flex direction="column" align="center">
+              <Divider y={16} />
+              <Text align="center" isBold={true}>
+                Pubkey
+              </Text>
+              <Divider y={16} />
+              <Text>{signerInfo?.pubkey}</Text>
+              <Divider y={16} />
+              <Text align="center" isBold={true}>
+                npub
+              </Text>
+              <Divider y={16} />
+              <Text>{signerInfo?.npub}</Text>
+            </Flex>
           </>
         ) : null}
 
@@ -130,7 +154,7 @@ const Page = () => {
 
         <Flex>
           <Button variant="borderless" onClick={handleNewPrivKey}>
-            Generate private key
+            Generate new private key
           </Button>
         </Flex>
       </Flex>
