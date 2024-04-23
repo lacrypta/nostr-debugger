@@ -21,10 +21,6 @@
         "text": "#f1f1f1"
     },
     "borders": {
-        "buttonRadius": "50px"
-    },
-    "font": {
-        "primary": "var(--font-primary)",
-        "secondary": "var(--font-secondary)"
+        "buttonRadius": "10px"
     }
 }
