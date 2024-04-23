@@ -11,7 +11,6 @@ import {
   Divider,
   Flex,
   Heading,
-  LinkButton,
   Sheet,
   Text,
 } from "@lawallet/ui";
@@ -181,7 +180,7 @@ const QueryComponent = () => {
         <Sheet isOpen={true} onClose={() => setSelectedEvent(null)}>
           <Container>
             <Heading as="h3" align="center">
-              Event {selectedEvent.id}
+              Event {formatAddress(selectedEvent.id!, 20)}
             </Heading>
 
             <Divider y={16} />
