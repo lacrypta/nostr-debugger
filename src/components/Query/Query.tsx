@@ -5,7 +5,15 @@ import {
   useFormatter,
   useSubscription,
 } from "@lawallet/react";
-import { Button, Divider, Flex, Heading, Sheet, Text } from "@lawallet/ui";
+import {
+  Button,
+  Container,
+  Divider,
+  Flex,
+  Heading,
+  Sheet,
+  Text,
+} from "@lawallet/ui";
 import { NDKEvent, NDKFilter, NDKKind, NostrEvent } from "@nostr-dev-kit/ndk";
 import dynamic from "next/dynamic";
 import { useSearchParams } from "next/navigation";
@@ -159,23 +167,25 @@ const QueryComponent = () => {
 
       {selectedEvent && (
         <Sheet isOpen={true} onClose={() => setSelectedEvent(null)}>
-          <Heading as="h3" align="center">
-            Event {selectedEvent.id}
-          </Heading>
-
-          <Divider y={16} />
-
-          <DynamicJSONView src={selectedEvent} {...DefaultJsonViewOptions} />
-
-          <Divider y={16} />
-
-          <Flex direction="column">
-            <Heading as="h4">Date: </Heading>
+          <Container>
+            <Heading as="h3" align="center">
+              Event {selectedEvent.id}
+            </Heading>
 
             <Divider y={16} />
 
-            <Text isBold>{formatDate(selectedEvent.created_at * 1000)}</Text>
-          </Flex>
+            <DynamicJSONView src={selectedEvent} {...DefaultJsonViewOptions} />
+
+            <Divider y={16} />
+
+            <Flex direction="column">
+              <Heading as="h4">Date: </Heading>
+
+              <Divider y={16} />
+
+              <Text isBold>{formatDate(selectedEvent.created_at * 1000)}</Text>
+            </Flex>
+          </Container>
         </Sheet>
       )}
     </>
