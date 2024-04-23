@@ -1,5 +1,4 @@
 "use client";
-import Navbar from "@/components/Navbar/Navbar";
 import { useNostrContext } from "@lawallet/react";
 import {
   Button,
@@ -50,12 +49,6 @@ const Page = () => {
 
   return (
     <Container>
-      <Divider y={16} />
-
-      <Navbar />
-
-      <Divider y={16} />
-
       <Heading as="h3" align="center">
         List of relays connections:{" "}
       </Heading>

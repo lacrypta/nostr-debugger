@@ -1,5 +1,4 @@
 "use client";
-import Navbar from "@/components/Navbar/Navbar";
 import {
   DefaultJsonViewOptions,
   DynamicJSONView,
@@ -78,12 +77,6 @@ const Page = () => {
 
   return (
     <Container>
-      <Divider y={16} />
-
-      <Navbar />
-
-      <Divider y={16} />
-
       <Heading as="h3" align="center">
         Event to publish:{" "}
       </Heading>

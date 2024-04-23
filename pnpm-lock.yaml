@@ -29,6 +29,9 @@ dependencies:
   react-json-view:
     specifier: ^1.21.3
     version: 1.21.3(@types/react@18.2.79)(react-dom@18.2.0)(react@18.2.0)
+  styled-components:
+    specifier: ^6.1.8
+    version: 6.1.8(react-dom@18.2.0)(react@18.2.0)
 
 devDependencies:
   '@types/node':

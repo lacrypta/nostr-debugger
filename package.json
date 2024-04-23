@@ -16,7 +16,8 @@
     "nostr-tools": "npm:@lawallet/nostr-tools@^1.17.0",
     "react": "^18",
     "react-dom": "^18",
-    "react-json-view": "^1.21.3"
+    "react-json-view": "^1.21.3",
+    "styled-components": "^6.1.8"
   },
   "overrides": {
     "nostr-tools": "npm:@lawallet/nostr-tools"
