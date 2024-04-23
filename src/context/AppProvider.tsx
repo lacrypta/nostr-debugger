@@ -9,7 +9,7 @@ import React, { Suspense } from "react";
 
 const config = createConfig({
   relaysList: [
-    "WSS://relay.damus.io",
+    "wss://relay.damus.io",
     "wss://relay.hodl.ar",
     "wss://relay.primal.net",
     "wss://nos.lol",
