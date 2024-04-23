@@ -12,6 +12,7 @@ import {
   Divider,
   Flex,
   Heading,
+  LinkButton,
   Sheet,
   Text,
 } from "@lawallet/ui";
@@ -37,7 +38,36 @@ export const DynamicJSONView = dynamic(() => import("react-json-view"), {
   ssr: false,
 });
 
-function validateNDKFilter(filter: NDKFilter): void {
+const exportJSON = async (events: NDKEvent[]) => {
+  try {
+    let eventsToNostr: NostrEvent[] = [];
+
+    await Promise.all(
+      events.map(async (event) => {
+        eventsToNostr.push(await event.toNostrEvent());
+      })
+    );
+
+    const jsonString = JSON.stringify(eventsToNostr, null, 2);
+    const blob = new Blob([jsonString], { type: "application/json" });
+
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", "events.json");
+
+    document.body.appendChild(link);
+    link.click();
+
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
+  } catch (e) {
+    console.log(e);
+    console.log("ocurrió un error al exportar");
+  }
+};
+
+function validateNDKFilter(filter: NDKFilter): NDKFilter {
   for (const key in filter) {
     if (key === "kinds") {
       const kinds = filter[key];
@@ -50,8 +80,6 @@ function validateNDKFilter(filter: NDKFilter): void {
       filter[key] = undefined;
     }
   }
-
-  console.log(filter);
 
   return filter;
 }
@@ -96,7 +124,9 @@ const QueryComponent = () => {
   const handleEditQuery = (newQuery: InteractionProps) => {
     if (!newQuery || !newQuery.updated_src) return;
 
-    setJSONQuery(validateNDKFilter(newQuery.updated_src) as NDKFilter);
+    setJSONQuery(
+      validateNDKFilter(newQuery.updated_src as NDKFilter) as NDKFilter
+    );
 
     const params = new URLSearchParams(window.location.search);
     params.set("query", btoa(JSON.stringify(newQuery.updated_src)));
@@ -146,9 +176,7 @@ const QueryComponent = () => {
           <Text color={appTheme.colors.primary}>Set date now</Text>
         </Flex>
       </Flex>
-
       <Divider y={16} />
-
       <DynamicJSONView
         src={JSONQuery}
         onEdit={handleEditQuery}
@@ -156,9 +184,7 @@ const QueryComponent = () => {
         onDelete={handleEditQuery}
         {...DefaultJsonViewOptions}
       />
-
       <Divider y={16} />
-
       <Flex>
         <Button onClick={() => setEnabledSubscription(!enabledSubscription)}>
           {enabledSubscription ? "Stop subscription" : "Start subscription"}
@@ -171,13 +197,23 @@ const QueryComponent = () => {
 
       <Divider y={16} />
 
-      {/* <Container size="small"> */}
-      <Heading as="h4">Events ({nostrEvents.length}):</Heading>
+      <Heading as="h4">Events ({nostrEvents.length}): </Heading>
 
-      <Divider y={16} />
+      {nostrEvents.length ? (
+        <>
+          <Flex align="start" justify="start">
+            <LinkButton
+              onClick={() => exportJSON(nostrEvents)}
+              variant="borderless"
+              size="small"
+            >
+              Export all events
+            </LinkButton>
+          </Flex>
 
-      {nostrEvents.length
-        ? nostrEvents.map((event) => {
+          <Divider y={16} />
+
+          {nostrEvents.map((event) => {
             return (
               <React.Fragment key={event.id}>
                 <Flex
@@ -195,9 +231,9 @@ const QueryComponent = () => {
                 <Divider y={16} />
               </React.Fragment>
             );
-          })
-        : null}
-
+          })}
+        </>
+      ) : null}
       {selectedEvent && (
         <Sheet isOpen={true} onClose={() => setSelectedEvent(null)}>
           <Container>
