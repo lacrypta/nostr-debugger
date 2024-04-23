@@ -69,15 +69,17 @@ const exportJSON = async (events: NDKEvent[]) => {
 
 function validateNDKFilter(filter: NDKFilter): NDKFilter {
   for (const key in filter) {
-    if (key === "kinds") {
-      const kinds = filter[key];
-      if (kinds) {
-        filter[key] = kinds.map((val) =>
-          typeof val === "number" ? val : parseInt(val, 10)
-        ) as number[];
-      }
-    } else if (Array.isArray(filter[key]) && filter[key].length === 0) {
+    if (Array.isArray(filter[key]) && filter[key].length === 0) {
       filter[key] = undefined;
+    } else {
+      if (key === "kinds") {
+        const kinds = filter[key];
+        if (kinds) {
+          filter[key] = kinds.map((val) =>
+            typeof val === "number" ? val : parseInt(val, 10)
+          ) as number[];
+        }
+      }
     }
   }
 
