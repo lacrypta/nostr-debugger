@@ -20,7 +20,8 @@ import { InteractionProps } from "react-json-view";
 
 const Page = () => {
   const [privateKey, setPrivateKey] = useState<string>("");
-  const { ndk, initializeSigner, signerInfo } = useNostrContext();
+  const { ndk, providers, authWithExtension, initializeSigner, signerInfo } =
+    useNostrContext();
   const [eventToPublish, setEventToPublish] = useState<NostrEvent>({
     kind: 1,
     pubkey: signerInfo?.pubkey || "",
@@ -145,10 +146,16 @@ const Page = () => {
 
         <Divider y={16} />
 
-        <Flex>
+        <Flex justify="space-between">
           <Button variant="borderless" onClick={handleNewPrivKey}>
             Generate new private key
           </Button>
+
+          {providers.webln && !signerInfo && (
+            <Button variant="borderless" onClick={authWithExtension}>
+              Conectarse con alby
+            </Button>
+          )}
         </Flex>
       </Flex>
     </Container>
