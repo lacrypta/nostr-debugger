@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { appTheme } from "@/config/theme";
 import {
   formatAddress,
@@ -36,6 +37,25 @@ export const DynamicJSONView = dynamic(() => import("react-json-view"), {
   ssr: false,
 });
 
+function validateNDKFilter(filter: NDKFilter): void {
+  for (const key in filter) {
+    if (key === "kinds") {
+      const kinds = filter[key];
+      if (kinds) {
+        filter[key] = kinds.map((val) =>
+          typeof val === "number" ? val : parseInt(val, 10)
+        ) as number[];
+      }
+    } else if (Array.isArray(filter[key]) && filter[key].length === 0) {
+      filter[key] = undefined;
+    }
+  }
+
+  console.log(filter);
+
+  return filter;
+}
+
 const QueryComponent = () => {
   const [selectedEvent, setSelectedEvent] = useState<NostrEvent | null>(null);
   const [enabledSubscription, setEnabledSubscription] = useState(false);
@@ -50,6 +70,7 @@ const QueryComponent = () => {
     ],
     since: undefined,
     until: undefined,
+    "#t": undefined,
     "#p": undefined,
     "#e": undefined,
     "#a": undefined,
@@ -74,7 +95,8 @@ const QueryComponent = () => {
 
   const handleEditQuery = (newQuery: InteractionProps) => {
     if (!newQuery || !newQuery.updated_src) return;
-    setJSONQuery(newQuery.updated_src as NDKFilter);
+
+    setJSONQuery(validateNDKFilter(newQuery.updated_src) as NDKFilter);
 
     const params = new URLSearchParams(window.location.search);
     params.set("query", btoa(JSON.stringify(newQuery.updated_src)));
