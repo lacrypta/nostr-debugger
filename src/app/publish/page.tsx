@@ -153,7 +153,7 @@ const Page = () => {
 
           {providers.webln && !signerInfo && (
             <Button variant="borderless" onClick={authWithExtension}>
-              Conectarse con alby
+              Connect With Alby
             </Button>
           )}
         </Flex>
