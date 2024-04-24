@@ -92,7 +92,7 @@ const GlobalProvider = ({ children }: { children: React.ReactNode }) => {
 
   const setFilterOnURLQuery = (newQuery: NDKFilter) => {
     const params = new URLSearchParams(window.location.search);
-    params.set("query", btoa(JSON.stringify(newQuery)));
+    params.set("filter", btoa(JSON.stringify(newQuery)));
     window.history.replaceState(
       {},
       "",

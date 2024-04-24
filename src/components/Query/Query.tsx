@@ -81,7 +81,7 @@ const QueryComponent = () => {
   }, [enabledSubscription]);
 
   useEffect(() => {
-    const queryParam = params.get("query");
+    const queryParam = params.get("filter");
     if (!queryParam) return;
 
     try {
