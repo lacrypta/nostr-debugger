@@ -39,7 +39,7 @@ export default function Home() {
             textDecorationColor: "none",
             color: appTheme.colors.primary,
           }}
-          href={"https://github.com/feririarte10/nostr-debugger"}
+          href={"https://github.com/lacrypta/nostr-debugger"}
         >
           here.
         </Link>
