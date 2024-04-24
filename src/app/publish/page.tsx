@@ -3,6 +3,7 @@ import {
   DefaultJsonViewOptions,
   DynamicJSONView,
 } from "@/components/Query/Query";
+import { useAppContext } from "@/context/AppProvider";
 import { nowInSeconds, useNostrContext } from "@lawallet/react";
 import {
   Button,
@@ -15,20 +16,15 @@ import {
 } from "@lawallet/ui";
 import { NDKEvent, NDKPrivateKeySigner, NostrEvent } from "@nostr-dev-kit/ndk";
 import { generatePrivateKey } from "nostr-tools";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 import { InteractionProps } from "react-json-view";
 
 const Page = () => {
-  const [privateKey, setPrivateKey] = useState<string>("");
   const { ndk, providers, authWithExtension, initializeSigner, signerInfo } =
     useNostrContext();
-  const [eventToPublish, setEventToPublish] = useState<NostrEvent>({
-    kind: 1,
-    pubkey: signerInfo?.pubkey || "",
-    created_at: nowInSeconds(),
-    content: "",
-    tags: [],
-  } as NostrEvent);
+
+  const { eventToPublish, setEventToPublish, privateKey, setPrivateKey } =
+    useAppContext();
 
   const handleEditJSON = (newQuery: InteractionProps) => {
     setEventToPublish({

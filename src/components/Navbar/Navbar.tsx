@@ -4,7 +4,6 @@ import { usePathname, useRouter } from "next/navigation";
 
 const Navbar = () => {
   const router = useRouter();
-
   const pathname = usePathname();
 
   return (
