@@ -1,6 +1,7 @@
 "use client";
 import { appTheme } from "@/config/theme";
 import { Container, Divider, Flex, Heading, Text } from "@lawallet/ui";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
@@ -21,17 +22,18 @@ export default function Home() {
 
       <Divider y={16} />
 
-      <Flex
-        gap={4}
-        onClick={() =>
-          router.push("https://github.com/lacrypta/nostr-debugger")
-        }
-      >
-        <Text>
-          The project repository is open source, and you can view the link{" "}
-        </Text>
-        <Text color={appTheme.colors.primary}>here.</Text>
-      </Flex>
+      <Text>
+        The project repository is open source, and you can view the link{" "}
+        <Link
+          style={{
+            textDecorationColor: "none",
+            color: appTheme.colors.primary,
+          }}
+          href={"https://github.com/feririarte10/nostr-debugger"}
+        >
+          here.
+        </Link>
+      </Text>
     </Container>
   );
 }
