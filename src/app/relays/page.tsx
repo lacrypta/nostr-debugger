@@ -143,8 +143,8 @@ const Page = () => {
                       xmlns="http://www.w3.org/2000/svg"
                       x="0px"
                       y="0px"
-                      width="10"
-                      height="10"
+                      width="16"
+                      height="16"
                       viewBox="0 0 48 48"
                     >
                       <path
