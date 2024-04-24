@@ -11,6 +11,7 @@ import {
 import { Container, Divider } from "@lawallet/ui";
 import { NextProvider } from "@lawallet/ui/next";
 import { NDKFilter, NDKKind, NostrEvent } from "@nostr-dev-kit/ndk";
+import { usePathname } from "next/navigation";
 import React, {
   Dispatch,
   SetStateAction,
@@ -56,7 +57,7 @@ const GlobalProvider = ({ children }: { children: React.ReactNode }) => {
   const { signerInfo } = useNostrContext();
 
   const [privateKey, setPrivateKey] = useState<string>("");
-  // const pathname = usePathname();
+  const pathname = usePathname();
 
   const [JSONQuery, setJSONQuery] = useState<NDKFilter>({
     kinds: [31111 as NDKKind],
@@ -100,8 +101,8 @@ const GlobalProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   useEffect(() => {
-    setFilterOnURLQuery(JSONQuery);
-  }, [JSONQuery]);
+    if (pathname === "/query") setFilterOnURLQuery(JSONQuery);
+  }, [JSONQuery, pathname]);
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 };

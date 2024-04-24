@@ -16,9 +16,11 @@ const Navbar = () => {
       </LinkButton>
 
       <Flex flex={1} gap={16} justify="end">
-        <LinkButton variant="borderless" onClick={() => router.push("/")}>
+        <LinkButton variant="borderless" onClick={() => router.push("/query")}>
           <Text
-            color={appTheme.colors[pathname === "/" ? "secondary" : "white"]}
+            color={
+              appTheme.colors[pathname === "/query" ? "secondary" : "white"]
+            }
           >
             Query
           </Text>
