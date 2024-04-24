@@ -1,16 +1,7 @@
 "use client";
 import CardButton from "@/components/CardButton/CardButton";
 import { appTheme } from "@/config/theme";
-import {
-  ButtonSetting,
-  CaretRightIcon,
-  Container,
-  Divider,
-  Flex,
-  Heading,
-  Icon,
-  Text,
-} from "@lawallet/ui";
+import { Container, Divider, Heading, Text } from "@lawallet/ui";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
