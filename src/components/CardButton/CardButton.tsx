@@ -1,6 +1,4 @@
-import { appTheme } from "@/config/theme";
-import { ButtonSetting, CaretRightIcon, Flex, Icon, Text } from "@lawallet/ui";
-import React from "react";
+import { Flex, LinkSetting, Text } from "@lawallet/ui";
 
 const CardButton = ({
   text,
@@ -10,15 +8,11 @@ const CardButton = ({
   onClick: () => void;
 }) => {
   return (
-    <ButtonSetting onClick={onClick}>
+    <LinkSetting onClick={onClick}>
       <Flex flex={1} align="start" justify="start">
         <Text isBold={true}>{text}</Text>
       </Flex>
-
-      <Icon size="small" color={appTheme.colors.gray40}>
-        <CaretRightIcon />
-      </Icon>
-    </ButtonSetting>
+    </LinkSetting>
   );
 };
 
