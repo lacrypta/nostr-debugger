@@ -9,7 +9,7 @@ import {
   nowInSeconds,
   useNostrContext,
 } from "@lawallet/react";
-import { Container, Divider } from "@lawallet/ui";
+import { Container, Divider, Loader } from "@lawallet/ui";
 import { NextProvider } from "@lawallet/ui/next";
 import { NDKFilter, NDKKind, NostrEvent } from "@nostr-dev-kit/ndk";
 import { usePathname } from "next/navigation";
@@ -109,25 +109,47 @@ const GlobalProvider = ({ children }: { children: React.ReactNode }) => {
 };
 
 const AppProvider = ({ children }: { children: React.ReactNode }) => {
+  const [relaysList, setRelaysList] = useState<string[]>([]);
+
+  const setDefaultRelays = () => {
+    setRelaysList(config.relaysList);
+    return;
+  };
+
+  useEffect(() => {
+    const storagedRelays = localStorage.getItem("relays");
+    if (!storagedRelays) return setDefaultRelays();
+
+    const parsedStoragedRelays = JSON.parse(storagedRelays);
+    if (parsedStoragedRelays && parsedStoragedRelays.length < 0)
+      return setDefaultRelays();
+
+    setRelaysList(parsedStoragedRelays);
+  }, []);
+
   return (
     <NextProvider theme={appTheme}>
-      <NostrProvider config={config}>
-        <GlobalProvider>
-          <Suspense>
-            <Container>
-              <Navbar />
+      {relaysList.length === 0 ? (
+        <Loader />
+      ) : (
+        <NostrProvider config={{ ...config, relaysList }}>
+          <GlobalProvider>
+            <Suspense>
+              <Container>
+                <Navbar />
 
-              <Divider y={16} />
+                <Divider y={16} />
 
-              {children}
+                {children}
 
-              <Divider y={16} />
+                <Divider y={16} />
 
-              <Footer />
-            </Container>
-          </Suspense>
-        </GlobalProvider>
-      </NostrProvider>
+                <Footer />
+              </Container>
+            </Suspense>
+          </GlobalProvider>
+        </NostrProvider>
+      )}
     </NextProvider>
   );
 };
