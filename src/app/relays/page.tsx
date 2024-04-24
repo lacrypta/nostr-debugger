@@ -120,6 +120,19 @@ const Page = () => {
       <Divider y={16} />
 
       <Container size="small">
+        <Flex direction="column" justify="center" align="center">
+          <Input
+            onChange={handleChangeInput}
+            placeholder="wss://relay.example.com"
+          />
+          <Divider y={16} />
+        </Flex>
+        <Flex>
+          <Button onClick={handleAddRelay}>Add</Button>
+        </Flex>
+
+        <Divider y={16} />
+
         {storagedRelayList.map((relay: string) => {
           return (
             <React.Fragment key={`${relay}+${connectionRelaysList.length}`}>
@@ -204,19 +217,6 @@ const Page = () => {
             </React.Fragment>
           );
         })}
-
-        <Divider y={16} />
-
-        <Flex direction="column" justify="center" align="center">
-          <Input
-            onChange={handleChangeInput}
-            placeholder="wss://relay.example.com"
-          />
-          <Divider y={16} />
-        </Flex>
-        <Flex>
-          <Button onClick={handleAddRelay}>Add</Button>
-        </Flex>
       </Container>
     </Container>
   );
