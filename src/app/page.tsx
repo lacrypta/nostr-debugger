@@ -66,6 +66,13 @@ export default function Home() {
       <Divider y={16} />
 
       <CardButton text="Manage relays" onClick={() => router.push("/relays")} />
+
+      <Divider y={16} />
+
+      <CardButton
+        text="LaWallet filters"
+        onClick={() => router.push("/auditor")}
+      />
     </Container>
   );
 }

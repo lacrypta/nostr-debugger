@@ -14,12 +14,17 @@ export function validateNDKFilter(filter: NDKFilter): NDKFilter {
     if (Array.isArray(filter[key]) && filter[key].length === 0) {
       filter[key] = undefined;
     } else {
-      if (key === "kinds") {
-        const kinds = filter[key];
-        if (kinds) {
-          filter[key] = kinds.map((val) =>
-            typeof val === "number" ? val : parseInt(val, 10)
-          ) as number[];
+      if (key === "since" || key === "until" || key === "limit") {
+        const element = filter[key];
+        if (element) filter[key] = parseInt(element, 10);
+      } else {
+        if (key === "kinds") {
+          const kinds = filter[key];
+          if (kinds) {
+            filter[key] = kinds.map((val) =>
+              typeof val === "number" ? val : parseInt(val, 10)
+            ) as number[];
+          }
         }
       }
     }
