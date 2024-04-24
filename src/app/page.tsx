@@ -1,4 +1,5 @@
 "use client";
+import CardButton from "@/components/CardButton/CardButton";
 import { appTheme } from "@/config/theme";
 import {
   ButtonSetting,
@@ -50,39 +51,21 @@ export default function Home() {
 
       <Divider y={16} />
 
-      <ButtonSetting onClick={() => router.push("/query")}>
-        <Flex flex={1} align="start" justify="start">
-          <Text isBold={true}>Start a events query</Text>
-        </Flex>
-
-        <Icon size="small" color={appTheme.colors.gray40}>
-          <CaretRightIcon />
-        </Icon>
-      </ButtonSetting>
+      <CardButton
+        text="Start a events query"
+        onClick={() => router.push("/query")}
+      />
 
       <Divider y={16} />
 
-      <ButtonSetting onClick={() => router.push("/publish")}>
-        <Flex flex={1} align="start" justify="start">
-          <Text isBold={true}>Publish event</Text>
-        </Flex>
-
-        <Icon size="small" color={appTheme.colors.gray40}>
-          <CaretRightIcon />
-        </Icon>
-      </ButtonSetting>
+      <CardButton
+        text="Publish event"
+        onClick={() => router.push("/publish")}
+      />
 
       <Divider y={16} />
 
-      <ButtonSetting onClick={() => router.push("/relays")}>
-        <Flex flex={1} align="start" justify="start">
-          <Text isBold={true}>Manage relays</Text>
-        </Flex>
-
-        <Icon size="small" color={appTheme.colors.gray40}>
-          <CaretRightIcon />
-        </Icon>
-      </ButtonSetting>
+      <CardButton text="Manage relays" onClick={() => router.push("/relays")} />
     </Container>
   );
 }

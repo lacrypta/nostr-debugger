@@ -1,6 +1,14 @@
 //@ts-nocheck
 import { NDKEvent, NDKFilter, NostrEvent } from "@nostr-dev-kit/ndk";
 
+export function encodeBase64Filter(filter: NDKFilter) {
+  try {
+    return btoa(JSON.stringify(filter));
+  } catch {
+    return "";
+  }
+}
+
 export function validateNDKFilter(filter: NDKFilter): NDKFilter {
   for (const key in filter) {
     if (Array.isArray(filter[key]) && filter[key].length === 0) {

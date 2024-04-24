@@ -2,6 +2,7 @@
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar/Navbar";
 import { appTheme } from "@/config/theme";
+import { encodeBase64Filter } from "@/utils";
 import {
   NostrProvider,
   createConfig,
@@ -92,7 +93,7 @@ const GlobalProvider = ({ children }: { children: React.ReactNode }) => {
 
   const setFilterOnURLQuery = (newQuery: NDKFilter) => {
     const params = new URLSearchParams(window.location.search);
-    params.set("filter", btoa(JSON.stringify(newQuery)));
+    params.set("filter", encodeBase64Filter(newQuery));
     window.history.replaceState(
       {},
       "",
