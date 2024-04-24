@@ -1,4 +1,5 @@
 "use client";
+import { appTheme } from "@/config/theme";
 import { useNostrContext } from "@lawallet/react";
 import {
   Button,
@@ -60,15 +61,19 @@ const Page = () => {
           return (
             <React.Fragment key={relay}>
               <Card>
-                <Flex direction="column">
+                <Flex direction="row" justify="center" align="center">
                   <Text>{relay}</Text>
 
-                  <LinkButton
-                    variant="borderless"
+                  <Flex
+                    flex={1}
+                    align="end"
+                    justify="end"
                     onClick={() => removeRelay(relay)}
                   >
-                    Delete
-                  </LinkButton>
+                    <Text color={appTheme.colors.primary} size="small">
+                      Delete
+                    </Text>
+                  </Flex>
                 </Flex>
               </Card>
 
