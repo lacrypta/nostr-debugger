@@ -1,6 +1,6 @@
 "use client";
+import { useActionOnKeypress } from "@/hooks/useActionOnKeypress";
 import { encodeBase64Filter } from "@/utils";
-import { normalizeLNDomain, useConfig } from "@lawallet/react";
 import { getUserPubkey } from "@lawallet/react/actions";
 import {
   Button,
@@ -65,6 +65,8 @@ const GetAccount = () => {
     const text = e.target.value;
     setInputHandle(text);
   };
+
+  useActionOnKeypress("Enter", handleApplyFilter, [inputHandle]);
 
   return (
     <Container>
