@@ -12,6 +12,7 @@
 - [x] Show relay connection status
 - [x] LaWallet filters preset
 - [ ] Save pre-config filters
+- [ ] Manage multiples subscriptions
 
 ## Getting started
 
