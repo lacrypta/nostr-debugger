@@ -7,7 +7,7 @@ import {
   NostrProvider,
   createConfig,
   nowInSeconds,
-  useNostrContext,
+  useNostr,
 } from "@lawallet/react";
 import { Container, Divider, Loader } from "@lawallet/ui";
 import { NextProvider } from "@lawallet/ui/next";
@@ -55,7 +55,7 @@ export const useAppContext = () => {
 };
 
 const GlobalProvider = ({ children }: { children: React.ReactNode }) => {
-  const { signerInfo } = useNostrContext();
+  const { signerInfo } = useNostr();
 
   const [privateKey, setPrivateKey] = useState<string>("");
   const pathname = usePathname();

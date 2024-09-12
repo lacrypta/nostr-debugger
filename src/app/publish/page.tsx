@@ -4,7 +4,7 @@ import {
   DynamicJSONView,
 } from "@/components/Query/Query";
 import { useAppContext } from "@/context/AppProvider";
-import { nowInSeconds, useNostrContext } from "@lawallet/react";
+import { nowInSeconds, useNostr } from "@lawallet/react";
 import {
   Button,
   Container,
@@ -14,14 +14,15 @@ import {
   Input,
   Text,
 } from "@lawallet/ui";
+import { bytesToHex } from "@noble/hashes/utils";
 import { NDKEvent, NDKPrivateKeySigner, NostrEvent } from "@nostr-dev-kit/ndk";
-import { generatePrivateKey } from "nostr-tools";
+import { generateSecretKey } from "nostr-tools";
 import { useCallback, useEffect } from "react";
 import { InteractionProps } from "react-json-view";
 
 const Page = () => {
   const { ndk, providers, authWithExtension, initializeSigner, signerInfo } =
-    useNostrContext();
+    useNostr();
 
   const { eventToPublish, setEventToPublish, privateKey, setPrivateKey } =
     useAppContext();
@@ -34,7 +35,8 @@ const Page = () => {
   };
 
   const handleNewPrivKey = async () => {
-    const pvKey = generatePrivateKey();
+    const sk = generateSecretKey();
+    const pvKey = bytesToHex(sk);
     const signer = new NDKPrivateKeySigner(pvKey);
     setPrivateKey(pvKey);
     if (signer) initializeSigner(signer);

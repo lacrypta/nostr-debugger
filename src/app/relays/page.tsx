@@ -1,7 +1,7 @@
 "use client";
 import { appTheme } from "@/config/theme";
 import { useActionOnKeypress } from "@/hooks/useActionOnKeypress";
-import { useNostrContext } from "@lawallet/react";
+import { useNostr } from "@lawallet/react";
 import {
   Button,
   Card,
@@ -23,7 +23,7 @@ const Page = () => {
     []
   );
 
-  const { ndk } = useNostrContext();
+  const { ndk } = useNostr();
 
   const reloadConnectedRelays = useCallback(() => {
     const relays = Object.keys(Object.fromEntries(ndk.pool.relays));
