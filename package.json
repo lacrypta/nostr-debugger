@@ -9,9 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@lawallet/react": "^0.2.45",
+    "@lawallet/react": "^0.2.52",
     "@lawallet/ui": "^0.1.28",
-    "@nostr-dev-kit/ndk": "^2.10.0",
+    "@nostr-dev-kit/ndk": "2.10.6",
     "next": "14.1.0",
     "nostr-tools": "2.7.2",
     "react": "18.2.0",

@@ -61,17 +61,17 @@ const GlobalProvider = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
 
   const [JSONQuery, setJSONQuery] = useState<NDKFilter>({
-    kinds: [31111 as NDKKind],
-    authors: [
-      "bd9b0b60d5cd2a9df282fc504e88334995e6fac8b148fa89e0f8c09e2a570a84",
-    ],
+    ids: undefined,
+    kinds: undefined,
+    authors: undefined,
     since: undefined,
     until: undefined,
     "#t": undefined,
+    "#d": undefined,
     "#p": undefined,
     "#e": undefined,
     "#a": undefined,
-    limit: 100,
+    limit: 1000,
   });
 
   const [eventToPublish, setEventToPublish] = useState<NostrEvent>({
